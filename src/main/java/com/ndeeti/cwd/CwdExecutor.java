@@ -8,35 +8,36 @@ import java.nio.file.Path;
 
 public class CwdExecutor {
 
+	Path workingDir() {
+		return Path.of("");
+	}
 
-    Path workingDir() {
-        return Path.of("");
-    }
+	String absolutePath(Path dir) {
+		Path absolutePath = dir.toAbsolutePath();
+		return absolutePath.toString();
+	}
 
-    String absolutePath(Path dir) {
-        Path absolutePath = dir.toAbsolutePath();
-        return absolutePath.toString();
-    }
+	String realPath(Path dir) throws IOException {
+		Path realPath = dir.toRealPath();
+		return realPath.toString();
+	}
 
-    String realPath(Path dir) throws IOException {
-        Path realPath = dir.toRealPath();
-        return realPath.toString();
-    }
+	void setCwdToClipboard(String path) {
+		StringSelection stringSelection = new StringSelection(path);
+		Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		systemClipboard.setContents(stringSelection, null);
+	}
 
-    void setCwdToClipboard(String path) {
-        StringSelection stringSelection = new StringSelection(path);
-        Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        systemClipboard.setContents(stringSelection, null);
-    }
+	public String absoluteCWD() {
+		String absolutePath = absolutePath(workingDir());
+		setCwdToClipboard(absolutePath);
+		return absolutePath;
+	}
 
-    public void absoluteCWD() {
-        String absolutePath = absolutePath(workingDir());
-        setCwdToClipboard(absolutePath);
-    }
-
-    public void realCWD() throws IOException {
-        String realPath = realPath(workingDir());
-        setCwdToClipboard(realPath);
-    }
+	public String realCWD() throws IOException {
+		String realPath = realPath(workingDir());
+		setCwdToClipboard(realPath);
+		return realPath;
+	}
 
 }
