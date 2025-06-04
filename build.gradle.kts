@@ -34,15 +34,23 @@ tasks.register<Exec>("buildNative") {
     var jpackageCommand = ""
     var shellType = "bash"
     var secondArg = "-c"
-    val vendorName = "Naresh Deeti"
+    val vendorName = "ndeeti"
+    val license = "LICENSE"
+    val appVersion = "0.0.1"
+    val icon = "cwd.ico"
     if (osName.contains("windows", true)) {
         shellType = "cmd"
         secondArg = "/c"
         jpackageCommand =
-            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.0.1-SNAPSHOT.jar --main-class com.ndeeti.cwd.CwdApplication -t exe -d build/"
+            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.0.1-SNAPSHOT.jar " +
+                    "--main-class com.ndeeti.cwd.CwdApplication -t exe --app-version $appVersion " +
+                    "--license-file $license --vendor $vendorName --icon $icon " +
+                    "-d build/ --win-dir-chooser"
     } else {
         jpackageCommand =
-            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.0.1-SNAPSHOT.jar --main-class com.ndeeti.cwd.CwdApplication -t rpm -d build/"
+            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.0.1-SNAPSHOT.jar " +
+                    "--main-class com.ndeeti.cwd.CwdApplication -t rpm --app-version $appVersion " +
+                    "--license-file $license --vendor $vendorName --icon $icon -d build/"
     }
     commandLine(
         shellType, secondArg,
