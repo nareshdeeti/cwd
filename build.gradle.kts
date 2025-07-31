@@ -30,7 +30,6 @@ tasks.jar {
 tasks.register<Exec>("buildNative") {
     dependsOn("build")
     workingDir = file("$projectDir")
-    val osName = System.getProperty("os.name")
     var jpackageCommand = ""
     var shellType = "bash"
     var secondArg = "-c"
@@ -38,7 +37,7 @@ tasks.register<Exec>("buildNative") {
     val license = "LICENSE"
     val appVersion = "0.1.0"
     var icon = "cwd.ico"
-    if (osName.contains("windows", true)) {
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows) {
         shellType = "cmd"
         secondArg = "/c"
         jpackageCommand =
