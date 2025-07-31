@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.ndeeti"
-version = "0.1-SNAPSHOT"
+version = "0.1.0-SNAPSHOT"
 
 java {
     toolchain {
@@ -36,19 +36,20 @@ tasks.register<Exec>("buildNative") {
     var secondArg = "-c"
     val vendorName = "ndeeti"
     val license = "LICENSE"
-    val appVersion = "0.1"
-    val icon = "cwd.ico"
+    val appVersion = "0.1.0"
+    var icon = "cwd.ico"
     if (osName.contains("windows", true)) {
         shellType = "cmd"
         secondArg = "/c"
         jpackageCommand =
-            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.1-SNAPSHOT.jar " +
+            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.1.0-SNAPSHOT.jar " +
                     "--main-class com.ndeeti.cwd.CwdApplication -t exe --app-version $appVersion " +
                     "--license-file $license --vendor $vendorName --icon $icon " +
                     "-d build/ --win-dir-chooser"
     } else {
+        icon = "cwd.png"
         jpackageCommand =
-            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.1-SNAPSHOT.jar " +
+            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.1.0-SNAPSHOT.jar " +
                     "--main-class com.ndeeti.cwd.CwdApplication -t rpm --app-version $appVersion " +
                     "--license-file $license --vendor $vendorName --icon $icon -d build/"
     }
