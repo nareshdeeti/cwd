@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.ndeeti"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.0"
 
 java {
     toolchain {
@@ -37,18 +37,19 @@ tasks.register<Exec>("buildNative") {
     val license = "LICENSE"
     val appVersion = "0.1.0"
     var icon = "cwd.ico"
+    val mainJarFileName = project.name + "-" + project.version + ".jar"
     if (org.gradle.internal.os.OperatingSystem.current().isWindows) {
         shellType = "cmd"
         secondArg = "/c"
         jpackageCommand =
-            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.1.0-SNAPSHOT.jar " +
+            "jpackage --input build/libs/ -n cwd --main-jar $mainJarFileName " +
                     "--main-class com.ndeeti.cwd.CwdApplication -t exe --app-version $appVersion " +
                     "--license-file $license --vendor $vendorName --icon $icon " +
                     "-d build/ --win-dir-chooser"
     } else {
         icon = "cwd.png"
         jpackageCommand =
-            "jpackage --input build/libs/ -n cwd --main-jar cwd-0.1.0-SNAPSHOT.jar " +
+            "jpackage --input build/libs/ -n cwd --main-jar $mainJarFileName " +
                     "--main-class com.ndeeti.cwd.CwdApplication -t rpm --app-version $appVersion " +
                     "--license-file $license --vendor $vendorName --icon $icon -d build/"
     }
